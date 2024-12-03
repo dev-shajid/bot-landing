@@ -25,15 +25,21 @@ export default function Home() {
   });
 
   return (
-    <div className='min-h-screen flex flex-col items-center justify-center bg-[#0a0a1f] bg-gradient-to-br from-[#0a0a1f] to-[#1a1a3f]'>
+    <div className='min-h-screen relative flex flex-col items-center justify-center bg-[#0a0a1f] bg-gradient-to-tr via-[#0a0a1f] to-black from-[#1a1a3f]'>
+
       <Header />
-      <main className='flex-1 w-full max-w-5xl'>
+
+      <div className='fixed left-[28%] top-0 h-[150px] w-[200px] rotate-12 rounded-3xl bg-gradient-to-l from-blue-600 to-indigo-600 blur-3xl filter block opacity-30 lg:top-32 lg:-right-30 lg:h-72 lg:w-[350px] xl:h-80 xl:w-[500px]'></div>
+      <div className='fixed left-[10%] top-50% h-[150px] w-[200px] rotate-12 rounded-3xl bg-gradient-to-l bg-purple-500 to-indigo-500 blur-3xl filter block opacity-30 lg:top-44 lg:-right-20 lg:h-72 lg:w-[350px] xl:h-80 xl:w-[500px]'></div>
+
+      <main className='flex-1 w-full max-w-5xl relative'>
+
         <Hero />
+
         <section
           ref={servicesRef as React.RefObject<HTMLElement>}
-          className={`transition-all duration-1000 ease-out ${
-            shouldAnimateServices ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`}
+          className={`transition-all duration-1000 ease-out ${shouldAnimateServices ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            }`}
         >
           <FeatureHighlights />
         </section>
@@ -56,9 +62,8 @@ export default function Home() {
 
         <section
           ref={communityRef as React.RefObject<HTMLElement>}
-          className={`w-full py-12 md:py-24 bg-[#0f0f2f]/30 transition-all duration-1000 ease-out ${
-            shouldAnimateCommunity ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`}
+          className={`w-full py-12 md:py-24 bg-[#0f0f2f]/30 transition-all duration-1000 ease-out ${shouldAnimateCommunity ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            }`}
         >
           <div className='container mx-auto px-4 md:px-6'>
             <h2 className='text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl text-white mb-4'>
@@ -73,9 +78,8 @@ export default function Home() {
 
         <section
           ref={agentShopRef as React.RefObject<HTMLElement>}
-          className={`w-full py-12 md:py-24 transition-all duration-1000 47uj8i ease-out ${
-            shouldAnimateAgentShop ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`}
+          className={`w-full py-12 md:py-24 transition-all duration-1000 47uj8i ease-out ${shouldAnimateAgentShop ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            }`}
         >
           <h2 className='px-4 md:px-6 mb-12 text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl text-white'>
             Members get access to
@@ -98,9 +102,8 @@ export default function Home() {
         </section>
         <section
           ref={memberCommunityRef as React.RefObject<HTMLElement>}
-          className={`w-full py-12  transition-all duration-1000 ease-out ${
-            shouldAnimateMemberCommunity ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`}
+          className={`w-full py-12  transition-all duration-1000 ease-out ${shouldAnimateMemberCommunity ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            }`}
         >
           <div className='container mx-auto px-4 md:px-6'>
             <div className='grid gap-12 lg:grid-cols-3 items-center'>
@@ -125,9 +128,8 @@ export default function Home() {
         </section>
         <section
           ref={testimonialRef as React.RefObject<HTMLElement>}
-          className={`w-full mt-12 py-12 md:py-24 transition-all duration-1000 ease-out ${
-            shouldAnimateTestimonial ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`}
+          className={`w-full mt-12 py-12 md:py-24 transition-all duration-1000 ease-out ${shouldAnimateTestimonial ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+            }`}
         >
           <div className='container mx-auto px-4 md:px-6'>
             <div className='max-w-3xl mx-auto text-center'>
