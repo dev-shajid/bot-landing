@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Card } from "./ui/card";
-import { BorderBeam } from "./ui/border-beam";
 
 const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID as string;
 const EMAILJS_TEMPLATE_ID = process.env
@@ -60,7 +59,7 @@ const Contact = () => {
   return (
     <section className='w-full py-12 md:py-24'>
       <div className='container mx-auto px-4 md:px-6'>
-        <Card className='border-[#494a87] relative max-w-2xl mx-auto bg-gradient-to-b from-[#111125] via-[#1a1a3f] to-[#1f1f51] shadow-lg'>
+        <Card className='border-[#5355d1] max-w-2xl mx-auto bg-gradient-to-br from-[#1a1a3f] to-[#2a2a5f] shadow-lg'>
           <div className='p-6 md:p-8'>
             <h2 className='text-xl font-bold tracking-tighter text-white mb-4'>
               Let&apos;s Build Your AI-Powered Future.
@@ -117,7 +116,6 @@ const Contact = () => {
               )}
             </form>
           </div>
-          <BorderBeam size={250} duration={12} delay={9} />
         </Card>
       </div>
     </section>
