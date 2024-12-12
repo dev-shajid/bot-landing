@@ -15,7 +15,7 @@ export const metadata = {
     description: "Attensys is a platform that provides AI-powered solutions to businesses.",
     images: [
       {
-        url: "https://chat-bot-attensys.vercel.app/icons/landing.png",
+        url: "/icons/landing.png",
         width: 1200,
         height: 630,
         alt: "Attensys | AI",
@@ -30,7 +30,7 @@ export const metadata = {
     site: '@attensys',
     title: "Attensys | AI",
     description: "Attensys is a platform that provides AI-powered solutions to businesses.",
-    images: 'https://chat-bot-attensys.vercel.app/icons/landing.png',
+    images: '/icons/landing.png',
   },
 };
 
@@ -44,19 +44,12 @@ export default function RootLayout({
       <Head>
         <title>{metadata.title}</title>
         <meta name="description" content={metadata.description} />
-        <meta property="og:title" content={metadata.openGraph.title} />
-        <meta property="og:description" content={metadata.openGraph.description} />
-        <meta property="og:image" content={metadata.openGraph.images[0].url} />
-        <meta property="og:image:width" content={`${metadata.openGraph.images[0].width}`} />
-        <meta property="og:image:height" content={`${metadata.openGraph.images[0].height}`} />
-        <meta property="og:type" content={metadata.openGraph.type} />
-        <meta property="og:locale" content={metadata.openGraph.locale} />
-        <meta property="og:site_name" content={metadata.openGraph.siteName} />
-        <meta property="twitter:card" content={metadata.twitter.card} />
-        <meta property="twitter:site" content={metadata.twitter.site} />
-        <meta property="twitter:title" content={metadata.twitter.title} />
-        <meta property="twitter:description" content={metadata.twitter.description} />
-        <meta property="twitter:image" content={metadata.twitter.images} />
+        <meta property="og:title" content="Attensys | AI" />
+        <meta property="og:description" content="Attensys is a platform that provides AI-powered solutions to businesses." />
+        <meta property="og:image" content="/icons/landing.png" />
+        <meta property="twitter:title" content="Attensys | AI" />
+        <meta property="twitter:description" content="Attensys is a platform that provides AI-powered solutions to businesses." />
+        <meta property="twitter:image" content="/icons/landing.png" />
         <link rel="icon" href={metadata.icons} />
       </Head>
       <body
