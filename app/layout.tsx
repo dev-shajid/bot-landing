@@ -2,8 +2,27 @@ import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import { Inter } from "next/font/google";
 import Script from "next/script";
+import type { Metadata } from "next";
 
 const font = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "Attensys | AI",
+  description: "Attensys is a platform that provides AI-powered solutions to businesses.",
+  icons: '/icons/favicon.ico',
+  openGraph: {
+    title: "Attensys | AI",
+    description: "Attensys is a platform that provides AI-powered solutions to businesses.",
+    images: [
+      {
+        url: "/assets/demo.gif",
+        width: 1200,
+        height: 630,
+        alt: "Attensys | AI",
+      },
+    ],
+  }
+};
 
 export default function RootLayout({
   children,
