@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     description: "Attensys is a platform that provides AI-powered solutions to businesses.",
     images: [
       {
-        url: "/icons/landing.png",
+        url: "https://chat-bot-attensys.vercel.app/icons/landing.png",
         width: 1200,
         height: 630,
         alt: "Attensys | AI",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     site: '@attensys',
     title: "Attensys | AI",
     description: "Attensys is a platform that provides AI-powered solutions to businesses.",
-    images: '/icons/landing.png',
+    images: 'https://chat-bot-attensys.vercel.app/icons/landing.png',
   },
 };
 
