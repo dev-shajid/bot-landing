@@ -13,7 +13,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen bg-background text-foreground antialiased max-w-[100dvw] !overflow-x-hidden",
+          "min-h-screen bg-black text-foreground antialiased max-w-[100dvw] !overflow-x-hidden",
           font.className
         )}
       >
