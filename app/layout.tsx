@@ -48,14 +48,14 @@ export default function RootLayout({
         <meta key="description" name="description" content={"Attensys is a platform that provides AI-powered solutions to businesses."} />
         <meta key="og-title" property="og:title" content="Attensys | AI" />
         <meta key="og-description" property="og:description" content={"Attensys is a platform that provides AI-powered solutions to businesses."} />
-        <meta key="og-url" property="og:url" content={`https://chat-bot-attensys.vercel.app`} />
-        <meta property="og:image" content="https://chat-bot-attensys.vercel.app/icons/landing.png/"/>
+        <meta key="og-url" property="og:url" content={`https://chat-bot-landing.vercel.app`} />
+        <meta property="og:image" content="https://chat-bot-landing.vercel.app/icons/landing.png/" />
         <meta key="twitter-title" name="twitter:title" content={"Attensys | AI"} />
         <meta key="twitter-description" name="twitter:description" content={"Attensys is a platform that provides AI-powered solutions to businesses."} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@attensys" />
-        <meta name="twitter:image" content={`https://chat-bot-attensys.vercel.app/icons/landing.png/`} />
-        <link rel="canonical" href="https://chat-bot-attensys.vercel.app/" />
+        <meta name="twitter:image" content={`https://chat-bot-landing.vercel.app/icons/landing.png/`} />
+        <link rel="canonical" href="https://chat-bot-landing.vercel.app/" />
       </Head>
       <body
         className={cn(

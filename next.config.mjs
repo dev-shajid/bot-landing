@@ -12,11 +12,11 @@ const nextConfig = {
     // Static files of the App
     {
       source: "/icons/favicon.ico",
-      destination: `https://chat-bot-attensys.vercel.app/icons/favicon.ico`,
+      destination: `https://chat-bot-landing.vercel.app/icons/favicon.ico`,
     },
     {
       source: "/icons/:path*",
-      destination: `https://chat-bot-attensys.vercel.app/icons/:path*`,
+      destination: `https://chat-bot-landing.vercel.app/icons/:path*`,
     },
   ]
 };
