@@ -2,11 +2,11 @@ import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import { Inter } from "next/font/google";
 import Script from "next/script";
-import type { Metadata } from "next";
+import Head from "next/head";
 
 const font = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Attensys | AI",
   description: "Attensys is a platform that provides AI-powered solutions to businesses.",
   icons: '/icons/favicon.ico',
@@ -41,6 +41,24 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <Head>
+        <title>{metadata.title}</title>
+        <meta name="description" content={metadata.description} />
+        <meta property="og:title" content={metadata.openGraph.title} />
+        <meta property="og:description" content={metadata.openGraph.description} />
+        <meta property="og:image" content={metadata.openGraph.images[0].url} />
+        <meta property="og:image:width" content={`${metadata.openGraph.images[0].width}`} />
+        <meta property="og:image:height" content={`${metadata.openGraph.images[0].height}`} />
+        <meta property="og:type" content={metadata.openGraph.type} />
+        <meta property="og:locale" content={metadata.openGraph.locale} />
+        <meta property="og:site_name" content={metadata.openGraph.siteName} />
+        <meta property="twitter:card" content={metadata.twitter.card} />
+        <meta property="twitter:site" content={metadata.twitter.site} />
+        <meta property="twitter:title" content={metadata.twitter.title} />
+        <meta property="twitter:description" content={metadata.twitter.description} />
+        <meta property="twitter:image" content={metadata.twitter.images} />
+        <link rel="icon" href={metadata.icons} />
+      </Head>
       <body
         className={cn(
           "min-h-screen bg-black text-foreground antialiased max-w-[100dvw] !overflow-x-hidden",
