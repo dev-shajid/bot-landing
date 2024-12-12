@@ -4,8 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import Wrapper from "./global/wrapper";
 import Container from "./global/container";
+import SVGAnimation from "./svg-animation";
 
 const Hero = () => {
+  const svgFrames = Array.from({ length: 292 }, (_, i) => `/assets/demo/Copy of main_00${i.toString().padStart(3, '0')}.svg`)
+
   return (
     <Wrapper className="relative">
       <div className="block absolute top-1/4 left-1 w-72 h-72 bg-indigo-800 opacity-80 rounded-full blur-[10rem] -z-10" />
@@ -54,19 +57,12 @@ const Hero = () => {
             </Link>
           </div>
 
-          {/* <div className="relative flex items-center py-10 md:py-20 w-full">
+          <div className="relative flex items-center py-10 md:py-20 w-full">
             <div className="absolute top-1/2 left-1/2 -z-10 gradient w-3/4 -translate-x-1/2 h-3/4 -translate-y-1/2 inset-0 blur-[10rem]"></div>
-            <div className="-m-2 rounded-xl p-2 ring-1 ring-inset ring-foreground/20 lg:-m-4 lg:rounded-2xl bg-opacity-50 backdrop-blur-3xl">
-              <Image
-                src="/assets/dashboard.svg"
-                alt="banner image"
-                width={1200}
-                height={1200}
-                quality={100}
-                className="rounded-md lg:rounded-xl bg-foreground/10 shadow-2xl ring-1 ring-border"
-              />
+            <div className="-m-2 aspect-video w-full rounded-xl p-2 ring-1 ring-inset ring-foreground/20 lg:-m-4 lg:rounded-2xl bg-opacity-50 backdrop-blur-3xl">
+              <SVGAnimation frames={svgFrames} fps={30} />
             </div>
-          </div> */}
+          </div>
         </div>
       </Container>
     </Wrapper>
