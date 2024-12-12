@@ -11,8 +11,7 @@ import Wrapper from "./global/wrapper";
 import Container from "./global/container";
 
 const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID as string;
-const EMAILJS_TEMPLATE_ID = process.env
-  .NEXT_PUBLIC_EMAILJS_TEMPLATE_ID as string;
+const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID as string;
 const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY as string;
 
 const Contact = () => {

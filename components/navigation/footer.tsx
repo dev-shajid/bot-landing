@@ -14,7 +14,7 @@ const Footer = () => {
             <Icons.logo className="h-7 w-7" />
           </div>
           <p className="text-muted-foreground mt-4 text-sm text-start">
-            Engage your customers today with Nexa AI.
+            Engage your customers today with Attensys AI.
           </p>
           <span className="mt-4 text-neutral-200 text-sm flex items-center">
             Made with{" "}
@@ -56,7 +56,7 @@ const Footer = () => {
 
       <div className="mt-8 border-t border-border/40 pt-4 md:pt-8 md:flex md:items-center md:justify-between w-full">
         <p className="text-sm text-muted-foreground mt-8 md:mt-0">
-          &copy; {new Date().getFullYear()} Nexa Technologies Inc. All rights
+          &copy; {new Date().getFullYear()} Attensys Technologies Inc. All rights
           reserved
         </p>
       </div>

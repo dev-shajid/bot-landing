@@ -23,7 +23,7 @@ const Testimonials = () => {
             What people are saying
           </h2>
           <p className="text-muted-foreground mt-6">
-            See how Nexa empowers businesses of all kinds. Here&apos;s what real
+            See how Attensys empowers businesses of all kinds. Here&apos;s what real
             people are saying online
           </p>
         </div>

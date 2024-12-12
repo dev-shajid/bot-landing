@@ -2,7 +2,6 @@ import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import { Inter } from "next/font/google";
 import Script from "next/script";
-import Head from "next/head";
 import type { Metadata } from "next";
 
 const font = Inter({ subsets: ["latin"] });
@@ -42,7 +41,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <Head>
+      <head>
         <title key="title">Attensys | AI</title>
         <meta key="keywords" name="keywords" content={`Attensys, AI Chatbot`} />
         <meta key="description" name="description" content={"Attensys is a platform that provides AI-powered solutions to businesses."} />
@@ -56,7 +55,7 @@ export default function RootLayout({
         <meta name="twitter:site" content="@attensys" />
         <meta name="twitter:image" content={`https://chat-bot-landing.vercel.app/icons/landing.png/`} />
         <link rel="canonical" href="https://chat-bot-landing.vercel.app/" />
-      </Head>
+      </head>
       <body
         className={cn(
           "min-h-screen bg-black text-foreground antialiased max-w-[100dvw] !overflow-x-hidden",
