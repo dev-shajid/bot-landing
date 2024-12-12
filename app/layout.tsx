@@ -21,7 +21,17 @@ export const metadata: Metadata = {
         alt: "Attensys | AI",
       },
     ],
-  }
+    type: 'website',
+    locale: 'en_US',
+    siteName: 'Attensys',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@attensys',
+    title: "Attensys | AI",
+    description: "Attensys is a platform that provides AI-powered solutions to businesses.",
+    images: '/icons/landing.png',
+  },
 };
 
 export default function RootLayout({
