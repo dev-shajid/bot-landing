@@ -5,6 +5,7 @@ import Image from "next/image";
 import Wrapper from "./global/wrapper";
 import Container from "./global/container";
 import AnimatedSplitText from "./ui/split-character-animation";
+import GifAnimation from '@/public/assets/demo.gif'
 
 const Hero = () => {
   const description = "Picture this: AI that handles your emails, schedules your meetings, and simplifies your workflows effortlessly. This isn't a dream — it's your business's new reality. Be the pioneer of this transformation.";
@@ -72,14 +73,11 @@ const Hero = () => {
             {/* <div className="absolute top-1/2 left-1/2 -z-10 gradient w-3/4 -translate-x-1/2 h-3/4 -translate-y-1/2 inset-0 blur-[10rem]"></div> */}
             {/* <div className="-m-2 aspect-video w-full rounded-xl p-2 ring-1 ring-inset ring-foreground/20 lg:-m-4 lg:rounded-2xl bg-opacity-50 backdrop-blur-3xl"> */}
               <Image
-                className="w-full h-full rounded-xl"
-                src="/assets/demo.gif"
+                className="w-full h-full aspect-video rounded-xl"
+                src={GifAnimation}
                 alt="Demo GIF"
-                layout="responsive"
-                width={1920}
-                height={1080}
+                unoptimized
               />
-            {/* </div> */}
           </div>
         </Container>
 
