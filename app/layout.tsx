@@ -49,6 +49,7 @@ export default function RootLayout({
         <meta key="og-title" property="og:title" content="Attensys | AI" />
         <meta key="og-description" property="og:description" content={"Attensys is a platform that provides AI-powered solutions to businesses."} />
         <meta key="og-url" property="og:url" content={`https://chat-bot-attensys.vercel.app`} />
+        <meta property="og:image" content="https://chat-bot-attensys.vercel.app"/>
         <meta key="twitter-title" name="twitter:title" content={"Attensys | AI"} />
         <meta key="twitter-description" name="twitter:description" content={"Attensys is a platform that provides AI-powered solutions to businesses."} />
         <meta name="twitter:card" content="summary_large_image" />
