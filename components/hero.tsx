@@ -69,19 +69,21 @@ const Hero = () => {
         </div>
         <Container delay={1.6}>
           <div className="relative flex items-center py-10 md:py-20 w-full">
-            <div className="absolute top-1/2 left-1/2 -z-10 gradient w-3/4 -translate-x-1/2 h-3/4 -translate-y-1/2 inset-0 blur-[10rem]"></div>
-            <div className="-m-2 aspect-video w-full rounded-xl p-2 ring-1 ring-inset ring-foreground/20 lg:-m-4 lg:rounded-2xl bg-opacity-50 backdrop-blur-3xl">
-              <video
+            {/* <div className="absolute top-1/2 left-1/2 -z-10 gradient w-3/4 -translate-x-1/2 h-3/4 -translate-y-1/2 inset-0 blur-[10rem]"></div> */}
+            {/* <div className="-m-2 aspect-video w-full rounded-xl p-2 ring-1 ring-inset ring-foreground/20 lg:-m-4 lg:rounded-2xl bg-opacity-50 backdrop-blur-3xl"> */}
+              <Image
                 className="w-full h-full rounded-xl"
-                src="/assets/demo.mp4"
-                autoPlay
-                loop
-                muted
-                playsInline
+                src="/assets/demo.gif"
+                alt="Demo GIF"
+                layout="responsive"
+                width={1920}
+                height={1080}
               />
-            </div>
+            {/* </div> */}
           </div>
         </Container>
+
+
       </div>
     </Wrapper>
   );
