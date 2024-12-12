@@ -72,7 +72,8 @@ const Hero = () => {
           <div className="relative flex items-center py-10 md:py-20 w-full">
             {/* <div className="absolute top-1/2 left-1/2 -z-10 gradient w-3/4 -translate-x-1/2 h-3/4 -translate-y-1/2 inset-0 blur-[10rem]"></div> */}
             {/* <div className="-m-2 aspect-video w-full rounded-xl p-2 ring-1 ring-inset ring-foreground/20 lg:-m-4 lg:rounded-2xl bg-opacity-50 backdrop-blur-3xl"> */}
-            <img
+            <Image
+              unoptimized={true}
               className="w-full h-full aspect-video rounded-xl"
               src={GifAnimation.src}
               alt="Demo GIF"
