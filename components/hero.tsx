@@ -5,14 +5,13 @@ import Image from "next/image";
 import Wrapper from "./global/wrapper";
 import Container from "./global/container";
 import AnimatedSplitText from "./ui/split-character-animation";
-import GifPlayer from "./GifPlayer";
 
 const Hero = () => {
   const description = "Picture this: AI that handles your emails, schedules your meetings, and simplifies your workflows effortlessly. This isn't a dream — it's your business's new reality. Be the pioneer of this transformation.";
 
   return (
     <Wrapper className="relative">
-      <div className="block absolute top-1/4 left-1 w-72 h-72 bg-indigo-800 opacity-80 rounded-full blur-[10rem] -z-10" />
+      <div className="block absolute top-12 left- w-72 h-72 bg-indigo-800 opacity-80 rounded-full blur-[10rem] -z-10" />
 
       <div className="absolute inset-0 dark:bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[linear-gradient(to_right,#161616_1px,transparent_1px),linear-gradient(to_bottom,#161616_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)] -z-10 h-[150vh]" />
 
@@ -68,18 +67,18 @@ const Hero = () => {
             </Link>
           </Container>
         </div>
-        <Container delay={1.6}>
-          <div className="relative flex items-center py-10 md:py-20 w-full">
-            {/* <div className="absolute top-1/2 left-1/2 -z-10 gradient w-3/4 -translate-x-1/2 h-3/4 -translate-y-1/2 inset-0 blur-[10rem]"></div> */}
-            {/* <div className="-m-2 aspect-video w-full rounded-xl p-2 ring-1 ring-inset ring-foreground/20 lg:-m-4 lg:rounded-2xl bg-opacity-50 backdrop-blur-3xl"> */}
-            {/* <Image
-              unoptimized={true}
+        <Container delay={1.6} className="w-full bg-gradient-to-b from-transparent to-black opacity-50 -z-10">
+            <div className="relative flex items-center py-10 md:py-20 w-full ">
+            <div className="absolute top-0 left-0 w-full h-full"></div>
+            <video
               className="w-full h-full aspect-video rounded-xl"
-              src={GifAnimation.src}
-              alt="Demo GIF"
-            /> */}
-            <GifPlayer />
-          </div>
+              src="/assets/demo.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+            />
+            </div>
         </Container>
 
 
