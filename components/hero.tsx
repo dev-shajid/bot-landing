@@ -1,7 +1,7 @@
 import React from "react";
-import { ArrowRight, ChevronRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
 import Wrapper from "./global/wrapper";
 import Container from "./global/container";
 import AnimatedSplitText from "./ui/split-character-animation";
