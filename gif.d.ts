@@ -1,0 +1,1 @@
+declare module '@deepit/react-gif-player';
