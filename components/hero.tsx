@@ -72,7 +72,7 @@ const Hero = () => {
             <div className="absolute top-0 left-0 w-full h-full"></div>
             <video
               className="w-full h-full aspect-video rounded-xl"
-              src="/assets/demo.mp4"
+              src="/assets/demo.webm"
               autoPlay
               loop
               muted
