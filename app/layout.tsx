@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     description: "Attensys is a platform that provides AI-powered solutions to businesses.",
     images: [
       {
-        url: "/assets/demo.gif",
+        url: "/icons/landing.png",
         width: 1200,
         height: 630,
         alt: "Attensys | AI",
