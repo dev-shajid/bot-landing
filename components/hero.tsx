@@ -5,7 +5,6 @@ import Image from "next/image";
 import Wrapper from "./global/wrapper";
 import Container from "./global/container";
 import AnimatedSplitText from "./ui/split-character-animation";
-import GifAnimation from '@/public/assets/demo.gif'
 
 const Hero = () => {
   const description = "Picture this: AI that handles your emails, schedules your meetings, and simplifies your workflows effortlessly. This isn't a dream — it's your business's new reality. Be the pioneer of this transformation.";
