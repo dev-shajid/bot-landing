@@ -67,7 +67,7 @@ const Contact = () => {
       <Container>
         <Card className='border-[#263461] relative max-w-2xl mx-auto shadow-lg overflow-hidden'>
           <div className="p-6 md:p-8 space-y-8 relative z-10">
-            <div className="max-w-lg mx-auto text-start md:text-center">
+            <div className="max-w-lg mx-auto text-center">
               {/* <SectionBadge title="How it works" /> */}
               <h2 className="text-2xl lg:text-3xl font-semibold">
                 Let&apos;s Build Your AI-Powered Future.

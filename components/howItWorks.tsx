@@ -13,7 +13,7 @@ const HowItWorks = () => {
       <div className="hidden md:block absolute top-1/2 -left-1/3 w-72 h-72 bg-indigo-600 rounded-full blur-[10rem] -z-10" />
       {/** HEADER AREA */}
       <Container>
-        <div className="max-w-lg mx-auto text-start md:text-center">
+        <div className="max-w-lg mx-auto text-center">
           <SectionBadge title="How it works" />
 
           <h2 className="text-3xl lg:text-4xl font-semibold mt-6">
