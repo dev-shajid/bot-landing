@@ -53,7 +53,7 @@ const Hero = () => {
         <Container delay={1.6} className="w-full bg-gradient-to-b from-transparent to-black opacity-50 -z-10">
           <div className="relative flex items-center py-10 md:py-20 w-full ">
             <video
-              className="w-full h-full max-h-[85dvh] aspect-[838/471] rounded-xl"
+              className="w-full h-full md:max-h-[85dvh] aspect-[838/471] rounded-xl"
               src="/assets/demo.webm"
               autoPlay
               loop
