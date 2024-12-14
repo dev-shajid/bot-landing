@@ -17,18 +17,12 @@ const Navbar = () => {
         <div className="flex items-center sm:gap-4">
           <Link
             href={"/"}
-            className={buttonVariants({ size: "sm", variant: "ghost" })}
-          >
-            Community
-          </Link>
-          <Link
-            href={"/"}
             className={buttonVariants({
               size: "sm",
               className: "md:flex",
             })}
           >
-            Chat with Us
+            Community
           </Link>
         </div>
       </div>
