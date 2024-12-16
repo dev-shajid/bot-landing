@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Wrapper from "./global/wrapper";
@@ -10,15 +10,12 @@ const Hero = () => {
     "Picture this: AI that handles your emails, schedules your meetings, and simplifies your workflows effortlessly. This isn't a dream — it's your business's new reality. Be the pioneer of this transformation.";
 
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isVideoVisible, setIsVideoVisible] = useState(false);
 
   // Observe video section for visibility
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
-        setIsVideoVisible(entry.isIntersecting);
-
         // Start or pause video based on visibility
         if (videoRef.current) {
           if (entry.isIntersecting) {
