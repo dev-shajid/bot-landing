@@ -26,7 +26,7 @@ const AnimatedSplitText: React.FC<AnimatedTextProps> = ({ text, delay = 0, class
         <motion.p
             initial="hidden"
             whileInView="reveal"
-            transition={{ staggerChildren: 0.02, delay }}
+            transition={{ staggerChildren: 0.01, delay }}
             viewport={{ once: true }}
             className={cn(
                 "text-base md:text-lg text-foreground/80 text-center",
@@ -34,7 +34,7 @@ const AnimatedSplitText: React.FC<AnimatedTextProps> = ({ text, delay = 0, class
             )}
         >
             {characters.map((char, i) => (
-                <motion.span key={i} variants={charVariants} transition={{ duration: 0.5 }}>
+                <motion.span key={i} variants={charVariants} transition={{ duration: 0.3 }}>
                     {char}
                 </motion.span>
             ))}

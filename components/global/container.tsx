@@ -7,6 +7,7 @@ interface Props {
   children: React.ReactNode;
   delay?: number;
   reverse?: boolean;
+  id?: string
 }
 
 const Container: React.FC<Props> = ({
@@ -14,9 +15,11 @@ const Container: React.FC<Props> = ({
   children,
   delay = 0.2,
   reverse,
+  id
 }) => {
   return (
     <motion.div
+      id={id}
       className={cn("w-full h-full", className)}
       initial={{ opacity: 0, y: reverse ? -20 : 20, filter: 'blur(10px)' }}
       whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
