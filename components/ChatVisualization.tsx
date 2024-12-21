@@ -152,16 +152,16 @@ export default function N8nWorkflowChat() {
 
   return (
     <div className="w-full max-w-6xl mx-auto">
-      <div className="aspect-video bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800">
+      <div className="sm:aspect-video bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800">
         <div className="h-full flex">
           {/* Sidebar */}
-          <div className="w-32 sm:w-64 bg-blue-600/10 border-r border-zinc-800">
+          <div className="w-32 sm:block hidden sm:w-64 bg-blue-600/10 border-r border-zinc-800">
             <ScrollArea className="h-full">
               <div className="p-2 sm:p-4 space-y-2 sm:space-y-4">
                 {n8nUsers.map((user, i) => (
                   <div
                     key={i}
-                    className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg hover:bg-zinc-800/50 transition-colors"
+                    className="flex items-center gap-2 sm:gap-3 p-1 sm:p-3 rounded-lg hover:bg-zinc-800/50 transition-colors"
                   >
                     <Avatar className="h-6 w-6 sm:h-8 sm:w-8">
                       <AvatarFallback>{user.name[0]}</AvatarFallback>
@@ -181,10 +181,10 @@ export default function N8nWorkflowChat() {
           </div>
 
           {/* Main Chat Area */}
-          <div className="flex-1 flex flex-col max-h-full">
+          <div className="flex-1 flex flex-col h-full">
             <div
               className={cn(
-                "relative flex h-[500px] w-full flex-col p-6 overflow-hidden md:shadow-xl",
+                "relative max-h-[300px] h-full overflow-hidden flex flex-1 w-full flex-col p-6 md:shadow-xl",
               )}
             >
               <AnimatedList>

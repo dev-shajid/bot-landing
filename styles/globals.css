@@ -4,11 +4,6 @@
 
 @layer base {
   :root {
-    /* Name: custom color palette
-       Author: Ilias Ism
-       URL: https://gradient.page */
-
-    /* CSS: .bg-gradient { background: var(--gradient) } */
     --gradient: linear-gradient(to top left, #007adf, #00ecbc);
 
     --background: 220 65% 3.52%;
@@ -41,6 +36,67 @@
     --ring: 220 100% 44%;
 
     --radius: 0.5rem;
+
+
+
+  --chat--color-primary: #4a6cdb !important; /* Indigo-inspired blue */
+  --chat--color-primary-shade-50: #425fc2 !important; 
+  --chat--color-primary-shade-100: #3a52aa !important; 
+  --chat--color-secondary: #4a6cdb !important; /* Bright complementary blue */
+  --chat--color-secondary-shade-50: #5274d7 !important; 
+  --chat--color-white: #dfe3ea !important; /* Light for dark theme */
+  --chat--color-light: #131316 !important; 
+  --chat--color-light-shade-50: #c5c5c5 !important; 
+  --chat--color-light-shade-100: #313131 !important; 
+  --chat--color-medium: #404957 !important; 
+  --chat--color-dark: #0b0e16 !important; /* Very dark background */
+  --chat--color-disabled: #5c6370 !important; 
+  --chat--color-typing: #6a7587 !important;
+
+  --chat--input--background: #121216 !important;
+  --chat--input--send--button--background: #121216 !important;
+  --chat--button--color: #ffffff !important;
+  --chat--input--text-color: #ffffff !important;
+  --chat--footer--color: #ffffff !important;
+
+  --chat--header--border-bottom: 1px solid #3e4047 !important;
+  --chat--spacing: 1rem !important;
+  --chat--border-radius: 0.4rem !important;
+  --chat--transition-duration: 0.15s !important;
+
+  --chat--window--width: 400px !important;
+  --chat--window--height: 600px !important;
+
+  --chat--header-height: auto !important;
+  --chat--header--padding: var(--chat--spacing) !important;
+  --chat--header--background: #2548bc !important;
+  --chat--header--color: white !important;
+  --chat--header--border-top: none !important;
+  --chat--header--border-bottom: 1px solid #3e4047 !important;
+  --chat--heading--font-size: 2em !important;
+  --chat--subtitle--font-size: inherit !important;
+  --chat--subtitle--line-height: 1.8 !important;
+
+  --chat--textarea--height: 50px !important;
+
+  --chat--message--font-size: 1rem !important;
+  --chat--message--padding: var(--chat--spacing) !important;
+  --chat--message--border-radius: var(--chat--border-radius) !important;
+  --chat--message-line-height: 1.8 !important;
+  --chat--message--bot--background: var(--chat--color-light) !important;
+  --chat--message--bot--color: white !important;
+  --chat--message--bot--border: none !important;
+  --chat--message--user--background: var(--chat--color-secondary) !important;
+  --chat--message--user--color: var(--chat--color-white) !important;
+  --chat--message--user--border: none !important;
+  --chat--message--pre--background: rgba(255, 255, 255, 0.1) !important;
+
+  --chat--toggle--background: var(--chat--color-primary) !important;
+  --chat--toggle--hover--background: var(--chat--color-primary-shade-50) !important;
+  --chat--toggle--active--background: var(--chat--color-primary-shade-100) !important;
+  --chat--toggle--color: var(--chat--color-white) !important;
+  --chat--toggle--size: 64px !important;
+
   }
 
   .dark {
