@@ -1,10 +1,8 @@
 'use client';
 
 import { useEffect } from 'react';
-import { Bot, Send, X, Menu, MessageSquare, HelpCircle, AlertCircle } from 'lucide-react';
 import '@n8n/chat/style.css';
 import { createChat } from '@n8n/chat';
-import { cn } from "@/lib/utils";
 
 export default function ChatBot() {
     useEffect(() => {
