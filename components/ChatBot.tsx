@@ -249,18 +249,57 @@ export default function ChatBot() {
         `;
         document.head.appendChild(style);
 
+
+        // Observe DOM changes to detect when submit button and textarea are available
         const observer = new MutationObserver(() => {
             const newConversationButton = document.querySelector('.chat-button');
             if (newConversationButton) {
                 (newConversationButton as HTMLElement).click();
-                observer.disconnect();
+            }
+
+            const textArea = document.querySelector('textarea[data-v-2a7fb1c3]');
+            const submitButton = document.querySelector('button[data-v-2a7fb1c3]');
+
+            if (textArea && submitButton) {
+                // Attach keydown listener to textarea (if not already attached)
+                if (!textArea.hasAttribute('listener-attached')) {
+                    textArea.addEventListener('keydown', (event) => {
+                        const keyboardEvent = event as KeyboardEvent;
+                        console.log(keyboardEvent.key, keyboardEvent.shiftKey);  // Debugging log
+
+                        // Detect Enter without Shift (send message)
+                        if (keyboardEvent.key === 'Enter' && !keyboardEvent.shiftKey) {
+                            event.preventDefault();
+                            (submitButton as HTMLButtonElement).click();
+                            removeFAQs();
+                        }
+                    });
+
+                    textArea.setAttribute('listener-attached', 'true');
+                }
+
+                // Attach click listener to submit button (if not already attached)
+                if (!submitButton.hasAttribute('listener-attached')) {
+                    submitButton.addEventListener('click', () => {
+                        removeFAQs();
+                    });
+
+                    submitButton.setAttribute('listener-attached', 'true');
+                }
+
+                // Disconnect observer ONLY when both textarea and submit button are handled
+                if (textArea.hasAttribute('listener-attached') && submitButton.hasAttribute('listener-attached')) {
+                    observer.disconnect();
+                }
             }
         });
 
+        // Observe for DOM mutations in the entire body (including dynamic content)
         observer.observe(document.body, {
             childList: true,
             subtree: true,
         });
+
 
         const chatHeader = document.querySelector('.chat-header');
         const chatBody = document.querySelector('.chat-body');
@@ -301,6 +340,11 @@ export default function ChatBot() {
             chatHeader.appendChild(buttonContainer);
         }
 
+        const removeFAQs = () => {
+            const faqContainer = document.querySelector('.faq-container');
+            if (faqContainer) faqContainer.remove();
+        }
+
         const sendMessageToBot = (message: string) => {
             const textArea = document.querySelector('textarea[data-v-2a7fb1c3]');
             if (textArea) {
@@ -311,10 +355,12 @@ export default function ChatBot() {
                     const submitButton = document.querySelector('button[data-v-2a7fb1c3]');
                     if (submitButton) {
                         (submitButton as HTMLButtonElement).click();
+                        removeFAQs();
                     }
                 }, 100);
             }
         };
+
 
         const displayFAQs = (chatBody: Element | null) => {
             // Check if an FAQ container already exists
@@ -326,9 +372,13 @@ export default function ChatBot() {
             faqContainer.className = 'faq-container';
 
             const faqs = [
-                { question: 'What is your refund policy?', message: 'Can you explain your refund policy?' },
-                { question: 'How do I track my order?', message: 'How can I track my order status?' },
-                { question: 'Do you offer international shipping?', message: 'Do you provide international shipping options?' },
+                { question: 'What services do attensys provide?', message: 'What services do attensys provide?' },
+                { question: 'Which industries benefit most?', message: 'Which industries benefit most?' },
+                { question: 'How can I create robust automated tests?', message: 'How can I create robust automated tests?' },
+                { question: 'What capabilities do personal AI agents have?', message: 'What capabilities do personal AI agents have?' },
+                { question: 'Can I customize integrations for my workflows?', message: 'Can I customize integrations for my workflows?' },
+                { question: 'How secure are workflows?', message: 'How secure are workflows?' },
+                { question: 'What should I do if I encounter a workflow failure?', message: 'What should I do if I encounter a workflow failure?' },
             ];
 
             const title = document.createElement('h3');
@@ -353,8 +403,11 @@ export default function ChatBot() {
             });
 
             chatBody?.appendChild(faqContainer);
-            faqContainer.scrollIntoView({ behavior: 'smooth' });
+            if (chatBody) {
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }
         };
+
 
         return () => {
             observer.disconnect();
