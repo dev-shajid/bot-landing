@@ -3,44 +3,45 @@
 import { useEffect } from 'react';
 import '@n8n/chat/style.css';
 import { createChat } from '@n8n/chat';
+import { chatConfig } from '@/action/chat-config';
 
 export default function ChatBot() {
     useEffect(() => {
-        // Initialize the chat widget
-        createChat({
-            webhookUrl: 'https://playground.attensys.ai/webhook/90cd1a80-7757-49a4-9fcf-17c9c8f24cb0/chat',
-            webhookConfig: {
-                method: 'POST',
-                headers: {
-                    Authorization: `Basic ${btoa(`${process.env.NEXT_PUBLIC_CHAT_N8N_USERNAME}:${process.env.NEXT_PUBLIC_CHAT_N8N_PASSWORD}`)}`,
+        chatConfig().then((authHeader) => {
+            createChat({
+                webhookUrl: 'https://playground.attensys.ai/webhook/90cd1a80-7757-49a4-9fcf-17c9c8f24cb0/chat',
+                webhookConfig: {
+                    method: 'POST',
+                    headers: {
+                        Authorization: authHeader,
+                    },
                 },
-            },
-            target: '#n8n-chat',
-            mode: 'window',
-            chatInputKey: 'chatInput',
-            chatSessionKey: 'sessionId',
-            metadata: {},
-            showWelcomeScreen: true,
-            defaultLanguage: 'en',
-            initialMessages: [
-                'Hi there! 👋',
-                'My name is Salahin. How can I assist you today?',
-            ],
-            i18n: {
-                en: {
-                    title: 'Hi there! 👋',
-                    subtitle: "Start a chat. We're here to help you 24/7.",
-                    footer: '',
-                    getStarted: 'New Conversation',
-                    inputPlaceholder: 'Type your question...',
-                    closeButtonTooltip: 'Close',
+                target: '#n8n-chat',
+                mode: 'window',
+                chatInputKey: 'chatInput',
+                chatSessionKey: 'sessionId',
+                metadata: {},
+                showWelcomeScreen: true,
+                defaultLanguage: 'en',
+                initialMessages: [
+                    'Hi there! 👋',
+                    'My name is Salahin. How can I assist you today?',
+                ],
+                i18n: {
+                    en: {
+                        title: 'Hi there! 👋',
+                        subtitle: "Start a chat. We're here to help you 24/7.",
+                        footer: '',
+                        getStarted: 'New Conversation',
+                        inputPlaceholder: 'Type your question...',
+                        closeButtonTooltip: 'Close',
+                    },
                 },
-            },
-        });
+            });
 
-        // Add custom styles
-        const style = document.createElement('style');
-        style.textContent = `
+            // Add custom styles
+            const style = document.createElement('style');
+            style.textContent = `
             .chat-window {
                 border-radius: 16px !important;
                 box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2) !important;
@@ -247,174 +248,175 @@ export default function ChatBot() {
                 }
             }
         `;
-        document.head.appendChild(style);
+            document.head.appendChild(style);
 
 
-        // Observe DOM changes to detect when submit button and textarea are available
-        const observer = new MutationObserver(() => {
-            const newConversationButton = document.querySelector('.chat-button');
-            if (newConversationButton) {
-                (newConversationButton as HTMLElement).click();
-            }
+            // Observe DOM changes to detect when submit button and textarea are available
+            const observer = new MutationObserver(() => {
+                const newConversationButton = document.querySelector('.chat-button');
+                if (newConversationButton) {
+                    (newConversationButton as HTMLElement).click();
+                }
 
-            const textArea = document.querySelector('textarea[data-v-2a7fb1c3]');
-            const submitButton = document.querySelector('button[data-v-2a7fb1c3]');
+                const textArea = document.querySelector('textarea[data-v-2a7fb1c3]');
+                const submitButton = document.querySelector('button[data-v-2a7fb1c3]');
 
-            if (textArea && submitButton) {
-                // Attach keydown listener to textarea (if not already attached)
-                if (!textArea.hasAttribute('listener-attached')) {
-                    textArea.addEventListener('keydown', (event) => {
-                        const keyboardEvent = event as KeyboardEvent;
-                        console.log(keyboardEvent.key, keyboardEvent.shiftKey);  // Debugging log
+                if (textArea && submitButton) {
+                    // Attach keydown listener to textarea (if not already attached)
+                    if (!textArea.hasAttribute('listener-attached')) {
+                        textArea.addEventListener('keydown', (event) => {
+                            const keyboardEvent = event as KeyboardEvent;
+                            console.log(keyboardEvent.key, keyboardEvent.shiftKey);  // Debugging log
 
-                        // Detect Enter without Shift (send message)
-                        if (keyboardEvent.key === 'Enter' && !keyboardEvent.shiftKey) {
-                            event.preventDefault();
-                            (submitButton as HTMLButtonElement).click();
+                            // Detect Enter without Shift (send message)
+                            if (keyboardEvent.key === 'Enter' && !keyboardEvent.shiftKey) {
+                                event.preventDefault();
+                                (submitButton as HTMLButtonElement).click();
+                                removeFAQs();
+                            }
+                        });
+
+                        textArea.setAttribute('listener-attached', 'true');
+                    }
+
+                    // Attach click listener to submit button (if not already attached)
+                    if (!submitButton.hasAttribute('listener-attached')) {
+                        submitButton.addEventListener('click', () => {
                             removeFAQs();
+                        });
+
+                        submitButton.setAttribute('listener-attached', 'true');
+                    }
+
+                    // Disconnect observer ONLY when both textarea and submit button are handled
+                    if (textArea.hasAttribute('listener-attached') && submitButton.hasAttribute('listener-attached')) {
+                        observer.disconnect();
+                    }
+                }
+            });
+
+            // Observe for DOM mutations in the entire body (including dynamic content)
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true,
+            });
+
+
+            const chatHeader = document.querySelector('.chat-header');
+            const chatBody = document.querySelector('.chat-body');
+            if (chatHeader) {
+                const buttonContainer = document.createElement('div');
+                buttonContainer.className = 'quick-actions-container';
+
+                const buttons = [
+                    { text: 'FAQ', icon: 'help-circle', message: '' },
+                    { text: 'Raise Issue', icon: 'alert-circle', message: 'I want to raise an issue ticket' },
+                    { text: 'Contact Support', icon: 'message-square', message: 'I need Contact Support' },
+                ];
+
+                buttons.forEach(({ text, icon, message }) => {
+                    const button = document.createElement('button');
+                    button.className = 'quick-actions-button';
+
+                    const iconElement = document.createElement('span');
+                    iconElement.innerHTML = `<i data-lucide="${icon}"></i>`;
+
+                    const textSpan = document.createElement('span');
+                    textSpan.textContent = text;
+
+                    button.appendChild(iconElement);
+                    button.appendChild(textSpan);
+
+                    button.addEventListener('click', () => {
+                        if (text === 'FAQ') {
+                            displayFAQs(chatBody);
+                        } else {
+                            sendMessageToBot(message);
                         }
                     });
 
-                    textArea.setAttribute('listener-attached', 'true');
+                    buttonContainer.appendChild(button);
+                });
+
+                chatHeader.appendChild(buttonContainer);
+            }
+
+            const removeFAQs = () => {
+                const faqContainer = document.querySelector('.faq-container');
+                if (faqContainer) faqContainer.remove();
+            }
+
+            const sendMessageToBot = (message: string) => {
+                const textArea = document.querySelector('textarea[data-v-2a7fb1c3]');
+                if (textArea) {
+                    (textArea as HTMLTextAreaElement).value = message;
+                    textArea.dispatchEvent(new Event('input', { bubbles: true }));
+
+                    setTimeout(() => {
+                        const submitButton = document.querySelector('button[data-v-2a7fb1c3]');
+                        if (submitButton) {
+                            (submitButton as HTMLButtonElement).click();
+                            removeFAQs();
+                        }
+                    }, 100);
+                }
+            };
+
+
+            const displayFAQs = (chatBody: Element | null) => {
+                // Check if an FAQ container already exists
+                if (chatBody?.querySelector('.faq-container')) {
+                    return; // Prevent adding duplicate FAQ containers
                 }
 
-                // Attach click listener to submit button (if not already attached)
-                if (!submitButton.hasAttribute('listener-attached')) {
-                    submitButton.addEventListener('click', () => {
-                        removeFAQs();
+                const faqContainer = document.createElement('div');
+                faqContainer.className = 'faq-container';
+
+                const faqs = [
+                    { question: 'What services do attensys provide?', message: 'What services do attensys provide?' },
+                    { question: 'Which industries benefit most?', message: 'Which industries benefit most?' },
+                    { question: 'How can I create robust automated tests?', message: 'How can I create robust automated tests?' },
+                    { question: 'What capabilities do personal AI agents have?', message: 'What capabilities do personal AI agents have?' },
+                    { question: 'Can I customize integrations for my workflows?', message: 'Can I customize integrations for my workflows?' },
+                    { question: 'How secure are workflows?', message: 'How secure are workflows?' },
+                    { question: 'What should I do if I encounter a workflow failure?', message: 'What should I do if I encounter a workflow failure?' },
+                ];
+
+                const title = document.createElement('h3');
+                title.textContent = 'Frequently Asked Questions';
+                title.style.color = 'white';
+                title.style.marginBottom = '1rem';
+                title.style.fontSize = '1rem';
+                title.style.fontWeight = '600';
+                faqContainer.appendChild(title);
+
+                faqs.forEach(({ question, message }) => {
+                    const faqButton = document.createElement('button');
+                    faqButton.className = 'faq-button';
+                    faqButton.textContent = question;
+
+                    faqButton.addEventListener('click', () => {
+                        sendMessageToBot(message);
+                        faqContainer.remove();
                     });
 
-                    submitButton.setAttribute('listener-attached', 'true');
-                }
-
-                // Disconnect observer ONLY when both textarea and submit button are handled
-                if (textArea.hasAttribute('listener-attached') && submitButton.hasAttribute('listener-attached')) {
-                    observer.disconnect();
-                }
-            }
-        });
-
-        // Observe for DOM mutations in the entire body (including dynamic content)
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true,
-        });
-
-
-        const chatHeader = document.querySelector('.chat-header');
-        const chatBody = document.querySelector('.chat-body');
-        if (chatHeader) {
-            const buttonContainer = document.createElement('div');
-            buttonContainer.className = 'quick-actions-container';
-
-            const buttons = [
-                { text: 'FAQ', icon: 'help-circle', message: '' },
-                { text: 'Raise Issue', icon: 'alert-circle', message: 'I want to raise an issue ticket' },
-                { text: 'Contact Support', icon: 'message-square', message: 'I need Contact Support' },
-            ];
-
-            buttons.forEach(({ text, icon, message }) => {
-                const button = document.createElement('button');
-                button.className = 'quick-actions-button';
-
-                const iconElement = document.createElement('span');
-                iconElement.innerHTML = `<i data-lucide="${icon}"></i>`;
-
-                const textSpan = document.createElement('span');
-                textSpan.textContent = text;
-
-                button.appendChild(iconElement);
-                button.appendChild(textSpan);
-
-                button.addEventListener('click', () => {
-                    if (text === 'FAQ') {
-                        displayFAQs(chatBody);
-                    } else {
-                        sendMessageToBot(message);
-                    }
+                    faqContainer.appendChild(faqButton);
                 });
 
-                buttonContainer.appendChild(button);
-            });
-
-            chatHeader.appendChild(buttonContainer);
-        }
-
-        const removeFAQs = () => {
-            const faqContainer = document.querySelector('.faq-container');
-            if (faqContainer) faqContainer.remove();
-        }
-
-        const sendMessageToBot = (message: string) => {
-            const textArea = document.querySelector('textarea[data-v-2a7fb1c3]');
-            if (textArea) {
-                (textArea as HTMLTextAreaElement).value = message;
-                textArea.dispatchEvent(new Event('input', { bubbles: true }));
-
-                setTimeout(() => {
-                    const submitButton = document.querySelector('button[data-v-2a7fb1c3]');
-                    if (submitButton) {
-                        (submitButton as HTMLButtonElement).click();
-                        removeFAQs();
-                    }
-                }, 100);
-            }
-        };
+                chatBody?.appendChild(faqContainer);
+                if (chatBody) {
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                }
+            };
 
 
-        const displayFAQs = (chatBody: Element | null) => {
-            // Check if an FAQ container already exists
-            if (chatBody?.querySelector('.faq-container')) {
-                return; // Prevent adding duplicate FAQ containers
-            }
-
-            const faqContainer = document.createElement('div');
-            faqContainer.className = 'faq-container';
-
-            const faqs = [
-                { question: 'What services do attensys provide?', message: 'What services do attensys provide?' },
-                { question: 'Which industries benefit most?', message: 'Which industries benefit most?' },
-                { question: 'How can I create robust automated tests?', message: 'How can I create robust automated tests?' },
-                { question: 'What capabilities do personal AI agents have?', message: 'What capabilities do personal AI agents have?' },
-                { question: 'Can I customize integrations for my workflows?', message: 'Can I customize integrations for my workflows?' },
-                { question: 'How secure are workflows?', message: 'How secure are workflows?' },
-                { question: 'What should I do if I encounter a workflow failure?', message: 'What should I do if I encounter a workflow failure?' },
-            ];
-
-            const title = document.createElement('h3');
-            title.textContent = 'Frequently Asked Questions';
-            title.style.color = 'white';
-            title.style.marginBottom = '1rem';
-            title.style.fontSize = '1rem';
-            title.style.fontWeight = '600';
-            faqContainer.appendChild(title);
-
-            faqs.forEach(({ question, message }) => {
-                const faqButton = document.createElement('button');
-                faqButton.className = 'faq-button';
-                faqButton.textContent = question;
-
-                faqButton.addEventListener('click', () => {
-                    sendMessageToBot(message);
-                    faqContainer.remove();
-                });
-
-                faqContainer.appendChild(faqButton);
-            });
-
-            chatBody?.appendChild(faqContainer);
-            if (chatBody) {
-                chatBody.scrollTop = chatBody.scrollHeight;
-            }
-        };
-
-
-        return () => {
-            observer.disconnect();
-            document.head.removeChild(style);
-        };
+            return () => {
+                observer.disconnect();
+                document.head.removeChild(style);
+            };
+        });
     }, []);
 
-    return <div id="n8n-chat" />;
+    return <div id="n8n-chat prose" />;
 }
 

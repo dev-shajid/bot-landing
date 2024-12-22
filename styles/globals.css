@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 @layer base {
+  ul, ol {
+    list-style: revert;
+    padding-left: 1rem;
+  }
+  
   :root {
     --gradient: linear-gradient(to top left, #007adf, #00ecbc);
 
