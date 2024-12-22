@@ -1,8 +1,10 @@
 'use client';
 
 import { useEffect } from 'react';
+import { Bot, Send, X, Menu, MessageSquare, HelpCircle, AlertCircle } from 'lucide-react';
 import '@n8n/chat/style.css';
 import { createChat } from '@n8n/chat';
+import { cn } from "@/lib/utils";
 
 export default function ChatBot() {
     useEffect(() => {
@@ -11,7 +13,9 @@ export default function ChatBot() {
             webhookUrl: 'https://playground.attensys.ai/webhook/90cd1a80-7757-49a4-9fcf-17c9c8f24cb0/chat',
             webhookConfig: {
                 method: 'POST',
-                headers: {},
+                headers: {
+                    Authorization: `Basic ${btoa(`${process.env.NEXT_PUBLIC_CHAT_N8N_USERNAME}:${process.env.NEXT_PUBLIC_CHAT_N8N_PASSWORD}`)}`,
+                },
             },
             target: '#n8n-chat',
             mode: 'window',
@@ -36,12 +40,222 @@ export default function ChatBot() {
             },
         });
 
-        // Simulate clicking the "New Conversation" button
+        // Add custom styles
+        const style = document.createElement('style');
+        style.textContent = `
+            .chat-window {
+                border-radius: 16px !important;
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2) !important;
+                backdrop-filter: blur(8px) !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                overflow: hidden !important;
+            }
+
+            main.chat-layout.chat-wrapper {
+                background: linear-gradient(to bottom, #2e74ff, #0a1835, #000000, #131316) !important;
+            }
+
+            .chat-header {
+                background: none !important;
+                padding: 1.5rem !important;
+                position: relative !important;
+                overflow: hidden !important;
+                border: 0 !important;
+            }
+
+            // .chat-header::before {
+            //     content: '';
+            //     position: absolute;
+            //     top: 0;
+            //     left: 0;
+            //     right: 0;
+            //     bottom: 0;
+            //     background: radial-gradient(circle at top right, rgba(255,255,255,0.1), transparent);
+            //     pointer-events: none;
+            // }
+
+            .chat-title {
+                font-size: 1.5rem !important;
+                font-weight: 700 !important;
+                margin-bottom: 0.5rem !important;
+                color: white !important;
+            }
+
+            .chat-subtitle {
+                opacity: 0.9 !important;
+                font-size: 0.9rem !important;
+                line-height: 1.5 !important;
+            }
+
+            .chat-body {
+                padding: 1rem !important;
+                background: none !important; //#131316
+            }
+
+            .chat-message-bot {
+                background: #2b2b2b !important;
+                border-radius: 12px !important;
+                padding: 1rem !important;
+                margin-bottom: 1rem !important;
+                animation: slideIn 0.3s ease-out !important;
+                border-top-left-radius: 4px !important;
+            }
+
+            .chat-message-user {
+                background: #4a6cdb !important;
+                border-radius: 12px !important;
+                padding: 1rem !important;
+                margin-bottom: 1rem !important;
+                animation: slideIn 0.3s ease-out !important;
+                border-top-right-radius: 4px !important;
+            }
+
+            .chat-input-container {
+                background: transparent !important;
+                border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+                padding: 1rem !important;
+            }
+
+            .chat-input {
+                background: #131316 !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                padding: 0 0.75rem !important;
+                color: white !important;
+                transition: all 0.2s ease !important;
+            }
+
+            .chat-send-button {
+                background: #4a6cdb !important;
+                border-radius: 8px !important;
+                padding: 0.75rem !important;
+                color: white !important;
+                transition: all 0.2s ease !important;
+            }
+
+            .chat-send-button:hover {
+                background: #2548bc !important;
+            }
+
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .quick-actions-button {
+                background: rgba(255, 255, 255, 0.1) !important;
+                border: 1px solid rgba(255, 255, 255, 0.2) !important;
+                color: white !important;
+                padding: 0.2rem 1rem !important;
+                border-radius: 6px !important;
+                font-size: 0.875rem !important;
+                transition: all 0.2s ease !important;
+                backdrop-filter: blur(4px) !important;
+                display: flex !important;
+                align-items: center !important;
+            }
+
+            .quick-actions-button:hover {
+                background: rgba(255, 255, 255, 0.15) !important;
+                border-color: rgba(255, 255, 255, 0.3) !important;
+                transform: translateY(-1px) !important;
+            }
+
+            .quick-actions-container {
+                display: flex !important;
+                gap: 0.5rem !important;
+                margin-top: 1rem !important;
+                flex-wrap: wrap !important;
+                justify-content: center !important;
+            }
+
+            .faq-container {
+                background: rgba(43, 43, 43, 0.8) !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                border-radius: 12px !important;
+                padding: 1rem !important;
+                margin: 1rem 0 !important;
+                backdrop-filter: blur(4px) !important;
+            }
+
+            .faq-button {
+                background: rgba(74, 108, 219, 0.2) !important;
+                border: 1px solid rgba(74, 108, 219, 0.3) !important;
+                color: white !important;
+                font-size: 0.875rem !important;
+                padding: 0.3rem 0.6rem !important;
+                border-radius: 8px !important;
+                width: 100% !important;
+                text-align: left !important;
+                margin: 0.5rem 0 !important;
+                transition: all 0.2s ease !important;
+            }
+
+            .faq-button:hover {
+                background: rgba(74, 108, 219, 0.3) !important;
+                border-color: rgba(74, 108, 219, 0.4) !important;
+            }
+
+            .chat-message-typing {
+                background: #2b2b2b !important;
+                border-radius: 12px !important;
+                padding: 12px !important;
+                width: fit-content !important;
+                margin: 8px 0 !important;
+                display: flex !important;
+                align-items: center !important;
+                gap: 4px !important;
+            }
+
+            .chat-message-typing-body {
+                display: flex !important;
+                align-items: center !important;
+                gap: 4px !important;
+            }
+
+            .chat-message-typing-circle {
+                width: 6px !important;
+                height: 6px !important;
+                border-radius: 50% !important;
+                background-color: #ffffff !important;
+                opacity: 0.7 !important;
+                display: inline-block !important;
+            }
+
+            .chat-message-typing-circle:nth-child(1) {
+                animation: typingAnimation 1s infinite ease-in-out !important;
+            }
+
+            .chat-message-typing-circle:nth-child(2) {
+                animation: typingAnimation 1s infinite ease-in-out 0.2s !important;
+            }
+
+            .chat-message-typing-circle:nth-child(3) {
+                animation: typingAnimation 1s infinite ease-in-out 0.4s !important;
+            }
+
+            @keyframes typingAnimation {
+                0%, 100% {
+                    transform: translateY(0);
+                }
+                50% {
+                    transform: translateY(-4px);
+                    opacity: 0.5;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
         const observer = new MutationObserver(() => {
-            const newConversationButton = document.querySelector('.chat-button'); // Target the button by class
+            const newConversationButton = document.querySelector('.chat-button');
             if (newConversationButton) {
                 (newConversationButton as HTMLElement).click();
-                observer.disconnect();  // Stop observing once clicked
+                observer.disconnect();
             }
         });
 
@@ -50,71 +264,106 @@ export default function ChatBot() {
             subtree: true,
         });
 
-        // Add buttons to simulate initial inputs
+        const chatHeader = document.querySelector('.chat-header');
         const chatBody = document.querySelector('.chat-body');
-        if (chatBody) {
+        if (chatHeader) {
             const buttonContainer = document.createElement('div');
-            buttonContainer.id = 'button-container';
-            buttonContainer.style.display = 'flex';
-            buttonContainer.style.justifyContent = 'center';
-            buttonContainer.style.gap = '8px';
-            buttonContainer.style.margin = '10px 0';
-            buttonContainer.style.position = 'sticky';
-            buttonContainer.style.bottom = '20px';
-            buttonContainer.style.width = '100%';
+            buttonContainer.className = 'quick-actions-container';
 
-            // Predefined button messages
             const buttons = [
-                { text: 'Say Hello', message: 'Hello! How can you assist me?' },
-                { text: 'Need Help', message: 'Can you help me with something?' },
-                { text: 'Service Info', message: 'What services do you provide?' },
+                { text: 'FAQ', icon: 'help-circle', message: '' },
+                { text: 'Raise Issue', icon: 'alert-circle', message: 'I want to raise an issue ticket' },
+                { text: 'Contact Support', icon: 'message-square', message: 'I need Contact Support' },
             ];
 
-            // Create buttons
-            buttons.forEach(({ text, message }) => {
+            buttons.forEach(({ text, icon, message }) => {
                 const button = document.createElement('button');
-                button.textContent = text;
-                button.style.backgroundColor = 'transparent';
-                button.style.color = '#ffffff';
-                button.style.border = '1px solid #ffffff';
-                button.style.borderRadius = '5px';
-                button.style.padding = '5px 10px';
-                button.style.fontSize = '0.8rem';
-                button.style.cursor = 'pointer';
+                button.className = 'quick-actions-button';
+
+                const iconElement = document.createElement('span');
+                iconElement.innerHTML = `<i data-lucide="${icon}"></i>`;
+
+                const textSpan = document.createElement('span');
+                textSpan.textContent = text;
+
+                button.appendChild(iconElement);
+                button.appendChild(textSpan);
 
                 button.addEventListener('click', () => {
-                    const textArea = document.querySelector('textarea[data-v-2a7fb1c3]');
-                    if (textArea) {
-                        (textArea as HTMLTextAreaElement).value = message;
-                        textArea.dispatchEvent(new Event('input', { bubbles: true }));
-
-                        setTimeout(() => {
-                            const submitButton = document.querySelector(
-                                'button[data-v-2a7fb1c3]'
-                            );
-                            if (submitButton) {
-                                (submitButton as HTMLButtonElement).click();
-                            }
-                        }, 100);
-
-                        // Hide buttons after first click
-                        const buttonContainer = document.getElementById('button-container');
-                        if (buttonContainer) {
-                            buttonContainer.style.display = 'none';
-                        }
+                    if (text === 'FAQ') {
+                        displayFAQs(chatBody);
+                    } else {
+                        sendMessageToBot(message);
                     }
                 });
 
                 buttonContainer.appendChild(button);
             });
 
-            // Append the button container to the chat body
-            chatBody.appendChild(buttonContainer);
+            chatHeader.appendChild(buttonContainer);
         }
 
-        // Cleanup observer on component unmount
-        return () => observer.disconnect();
+        const sendMessageToBot = (message: string) => {
+            const textArea = document.querySelector('textarea[data-v-2a7fb1c3]');
+            if (textArea) {
+                (textArea as HTMLTextAreaElement).value = message;
+                textArea.dispatchEvent(new Event('input', { bubbles: true }));
+
+                setTimeout(() => {
+                    const submitButton = document.querySelector('button[data-v-2a7fb1c3]');
+                    if (submitButton) {
+                        (submitButton as HTMLButtonElement).click();
+                    }
+                }, 100);
+            }
+        };
+
+        const displayFAQs = (chatBody: Element | null) => {
+            // Check if an FAQ container already exists
+            if (chatBody?.querySelector('.faq-container')) {
+                return; // Prevent adding duplicate FAQ containers
+            }
+
+            const faqContainer = document.createElement('div');
+            faqContainer.className = 'faq-container';
+
+            const faqs = [
+                { question: 'What is your refund policy?', message: 'Can you explain your refund policy?' },
+                { question: 'How do I track my order?', message: 'How can I track my order status?' },
+                { question: 'Do you offer international shipping?', message: 'Do you provide international shipping options?' },
+            ];
+
+            const title = document.createElement('h3');
+            title.textContent = 'Frequently Asked Questions';
+            title.style.color = 'white';
+            title.style.marginBottom = '1rem';
+            title.style.fontSize = '1rem';
+            title.style.fontWeight = '600';
+            faqContainer.appendChild(title);
+
+            faqs.forEach(({ question, message }) => {
+                const faqButton = document.createElement('button');
+                faqButton.className = 'faq-button';
+                faqButton.textContent = question;
+
+                faqButton.addEventListener('click', () => {
+                    sendMessageToBot(message);
+                    faqContainer.remove();
+                });
+
+                faqContainer.appendChild(faqButton);
+            });
+
+            chatBody?.appendChild(faqContainer);
+            faqContainer.scrollIntoView({ behavior: 'smooth' });
+        };
+
+        return () => {
+            observer.disconnect();
+            document.head.removeChild(style);
+        };
     }, []);
 
-    return <div id="n8n-chat"></div>;
+    return <div id="n8n-chat" />;
 }
+

@@ -39,7 +39,8 @@
 
 
 
-  --chat--color-primary: #4a6cdb !important; /* Indigo-inspired blue */
+  --chat--color-primary: #2548bc !important; /* Indigo-inspired blue */
+  /* --chat--color-primary: #4a6cdb !important; */
   --chat--color-primary-shade-50: #425fc2 !important; 
   --chat--color-primary-shade-100: #3a52aa !important; 
   --chat--color-secondary: #4a6cdb !important; /* Bright complementary blue */
@@ -79,8 +80,8 @@
 
   --chat--textarea--height: 50px !important;
 
-  --chat--message--font-size: 1rem !important;
-  --chat--message--padding: var(--chat--spacing) !important;
+  --chat--message--font-size: 12px !important;
+  --chat--message--padding: 6px 12px !important;
   --chat--message--border-radius: var(--chat--border-radius) !important;
   --chat--message-line-height: 1.8 !important;
   --chat--message--bot--background: var(--chat--color-light) !important;
@@ -96,6 +97,8 @@
   --chat--toggle--active--background: var(--chat--color-primary-shade-100) !important;
   --chat--toggle--color: var(--chat--color-white) !important;
   --chat--toggle--size: 64px !important;
+
+  --chat--message--bot--background: #2b2b2b !important;
 
   }
 
