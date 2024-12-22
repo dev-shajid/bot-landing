@@ -1,55 +1,54 @@
 "use client";
-import React, { useState, useRef } from "react";
-import emailjs from "@emailjs/browser";
-import { Send } from "lucide-react";
+import React, { useState } from "react";
+import { Send } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-import { Card } from "./ui/card";
-import { BorderBeam } from "./ui/border-beam";
-import Wrapper from "./global/wrapper";
-import Container from "./global/container";
+import { Card } from "@/components/ui/card";
+import { BorderBeam } from "@/components/ui/border-beam";
+import Wrapper from "@/components/global/wrapper";
+import Container from "@/components/global/container";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { useForm } from "react-hook-form";
 
-const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID as string;
-const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID as string;
-const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY as string;
+const formSchema = z.object({
+  email: z.string().email({ message: "Invalid email address" }),
+  message: z.string().min(10, { message: "Message must be at least 10 characters" }),
+});
 
 const Contact = () => {
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
   const [status, setStatus] = useState<
     "idle" | "sending" | "success" | "error"
   >("idle");
 
-  const form = useRef<HTMLFormElement>(null);
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      message: "",
+    },
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setStatus("sending");
 
-    if (!form.current) return;
-
-    // Validate environment variables
-    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
-      console.error("EmailJS configuration is missing");
-      setStatus("error");
-      setTimeout(() => setStatus("idle"), 3000);
-      return;
-    }
-
     try {
-      await emailjs
-        .sendForm(
-          EMAILJS_SERVICE_ID,
-          EMAILJS_TEMPLATE_ID,
-          form.current,
-          EMAILJS_PUBLIC_KEY,
-        )
-        .then(() => {
-          setStatus("success");
-          setEmail("");
-          setMessage("");
-        });
+      await fetch('https://playground.attensys.ai/webhook/send-message', {
+        method: 'POST',
+        body: JSON.stringify(values),
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      setStatus("success");
+      form.reset();
 
       setTimeout(() => setStatus("idle"), 3000);
     } catch (error) {
@@ -58,17 +57,14 @@ const Contact = () => {
       setTimeout(() => setStatus("idle"), 3000);
     }
   };
+
   return (
     <Wrapper className="flex flex-col items-center justify-center py-12 relative">
-
       <div className="hidden md:block absolute top-0 -right-1/3 w-72 h-72 bg-primary rounded-full blur-[10rem] -z-10" />
-      {/* <div className="hidden md:block absolute top-1/2 -left-1/3 w-72 h-72 bg-indigo-600 rounded-full blur-[10rem] -z-10" /> */}
-
       <Container>
         <Card className='border-[#263461] relative max-w-2xl mx-auto shadow-lg overflow-hidden'>
           <div className="p-6 md:p-8 space-y-8 relative z-10">
             <div className="max-w-lg mx-auto text-center">
-              {/* <SectionBadge title="How it works" /> */}
               <h2 className="text-2xl lg:text-3xl font-semibold">
                 Let&apos;s Build Your AI-Powered Future.
               </h2>
@@ -77,53 +73,68 @@ const Contact = () => {
                 help you take the next step toward smarter operations.
               </p>
             </div>
-            <form ref={form} onSubmit={handleSubmit} className='space-y-6'>
-              <Input
-                type='email'
-                name='from_name'
-                placeholder='Your email'
-                value={email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setEmail(e.target.value);
-                }}
-                required
-                className='bg-[#0a0a1f]/50 border-gray-700 text-white placeholder-gray-400'
-              />
-              <Textarea
-                name='message'
-                placeholder='Your message'
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                required
-                rows={4}
-                className='bg-[#0a0f1f]/50 border-gray-700 text-white placeholder-gray-400'
-              />
-              <Button
-                type='submit'
-                disabled={status === "sending"}
-                className='w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100'
-              >
-                {status === "sending" ? (
-                  "Sending..."
-                ) : (
-                  <>
-                    Send Message
-                    <Send className='ml-2 h-4 w-4' />
-                  </>
-                )}
-              </Button>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input
+                          placeholder="Your email"
+                          {...field}
+                          className='bg-[#0a0a1f]/50 border-gray-700 text-white placeholder-gray-400'
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="message"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Your message"
+                          {...field}
+                          rows={4}
+                          className='bg-[#0a0f1f]/50 border-gray-700 text-white placeholder-gray-400'
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button
+                  type='submit'
+                  disabled={status === "sending"}
+                  className='w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100'
+                >
+                  {status === "sending" ? (
+                    "Sending..."
+                  ) : (
+                    <>
+                      Send Message
+                      <Send className='ml-2 h-4 w-4' />
+                    </>
+                  )}
+                </Button>
+              </form>
+            </Form>
 
-              {status === "success" && (
-                <p className='text-green-400 mt-2 text-center'>
-                  Message sent successfully!
-                </p>
-              )}
-              {status === "error" && (
-                <p className='text-red-400 mt-2 text-center'>
-                  Failed to send message. Please try again.
-                </p>
-              )}
-            </form>
+            {status === "success" && (
+              <p className='text-green-400 mt-2 text-center'>
+                Message sent successfully!
+              </p>
+            )}
+            {status === "error" && (
+              <p className='text-red-400 mt-2 text-center'>
+                Failed to send message. Please try again.
+              </p>
+            )}
           </div>
           <BorderBeam size={250} duration={12} delay={9} />
         </Card>
@@ -133,3 +144,4 @@ const Contact = () => {
 };
 
 export default Contact;
+
